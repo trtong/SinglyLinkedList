@@ -3,9 +3,10 @@ package com.zipcodewilmington.singlylinkedlist;
 /**
  * Created by leon on 1/10/18.
  */
-public class SinglyLinkedList<T> {
+public class SinglyLinkedList<T extends Comparable<T>> {
     private int size;
-    private class Node<T> {
+
+    private class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 
         private T data;
         private Node<T> address;
@@ -34,6 +35,11 @@ public class SinglyLinkedList<T> {
         public void setAddress(Node<T> address) {
             this.address = address;
         }
+
+
+        public int compareTo(Node<T> n) {
+            return this.data.compareTo(n.data);
+        }
     }
 
     // singly linkedlist of T, only including nodes of T
@@ -47,7 +53,7 @@ public class SinglyLinkedList<T> {
     public SinglyLinkedList() {
     }
 
-    public void add(T data){
+    public void add(T data) {
         size++;
         if (head == null) {
             head = new Node<T>(data);
@@ -63,9 +69,7 @@ public class SinglyLinkedList<T> {
     }
 
     public void remove(int index) {
-        // for loop when i = index
-        // remove that node
-        // link the prior nodes address to the node after the removed one
+
         if (index < 0 || index >= size) {
             throw new RuntimeException("Node does not exist within bounds.");
         } else {
@@ -87,12 +91,30 @@ public class SinglyLinkedList<T> {
 
     }
 
-    public boolean contains() {
+    public boolean contains(T data) {
+
+        Node<T> cur = head;
+        for (int i = 0; i < size; i++) {
+            if (cur.getData().equals(data)) {
+                return true;
+            } else {
+                cur = cur.getAddress();
+            }
+        }
         return false;
     }
 
-    public int find() {
-        return 0;
+    public int find(T data) {
+
+        Node<T> cur = head;
+        for (int i = 0; i < size; i++) {
+            if (cur.getData().equals(data)) {
+                return i;
+            } else {
+                cur = cur.getAddress();
+            }
+        }
+        return -1;
     }
 
     public Integer size() {
@@ -112,12 +134,22 @@ public class SinglyLinkedList<T> {
         }
     }
 
-    public SinglyLinkedList<T> copy(SinglyLinkedList<T> list) {
-        return null;
+    public SinglyLinkedList<T> copy() {
+
+        SinglyLinkedList<T> newList = new SinglyLinkedList<T>();
+
+        Node<T> cur = this.head;
+
+        for (int i = 0; i < this.size(); i++) {
+            newList.add(cur.getData());
+            cur = (cur.getAddress());
+        }
+
+        return newList;
     }
 
-    public SinglyLinkedList<T> sort(SinglyLinkedList<T> list) {
-        return null;
-    }
+    public void sort() {
 
+
+    }
 }

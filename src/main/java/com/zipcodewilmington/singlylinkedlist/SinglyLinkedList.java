@@ -159,7 +159,12 @@ public class SinglyLinkedList<T extends Comparable<T>> {
     // Bubble sort
 
     public void sort() {
-        Node<T> lowNode = head, lowPriorNode = null, currentNode, lowAddress, currentPriorNode, tempNode;
+        Node<T> lowNode = head,
+                lowPriorNode = null,
+                currentNode,
+                lowAddress,
+                currentPriorNode,
+                tempNode;
 
         for (int i = 0; i < size; i++) {
             currentNode = lowNode;
@@ -193,12 +198,10 @@ public class SinglyLinkedList<T extends Comparable<T>> {
                         }
                         lowPriorNode.setAddress(currentNode);
                     }
-
                     tempNode = currentNode;
                     currentNode = lowNode;
                     lowNode = tempNode;
                 }
-
             }
             lowPriorNode = lowNode;
             lowNode = lowNode.getAddress();

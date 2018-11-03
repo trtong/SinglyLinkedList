@@ -88,7 +88,6 @@ public class SinglyLinkedList<T extends Comparable<T>> {
             }
             size--;
         }
-
     }
 
     public boolean contains(T data) {
@@ -148,8 +147,61 @@ public class SinglyLinkedList<T extends Comparable<T>> {
         return newList;
     }
 
+    public void print() {
+        Node<T> current = head;
+        while(current != null) {
+            System.out.println(current.getData());
+            current = current.getAddress();
+        }
+        System.out.println("");
+    }
+
+    // Bubble sort
+
     public void sort() {
+        Node<T> lowNode = head, lowPriorNode = null, currentNode, lowAddress, currentPriorNode, tempNode;
 
+        for (int i = 0; i < size; i++) {
+            currentNode = lowNode;
+            for (int j = i+1; j < size; j++) {
+                currentPriorNode = currentNode;
+                currentNode = currentNode.getAddress();
+                if (currentNode == null) break;
 
+                // Need to swap
+                if (currentNode.compareTo(lowNode) < 0) {
+                    lowAddress = lowNode.getAddress();
+                    // Swap low node first
+
+                    lowNode.setAddress(currentNode.getAddress());
+                    if (currentPriorNode != lowNode) {
+                        currentPriorNode.setAddress(lowNode);
+                    }
+
+                    if (lowPriorNode == null) {
+                        if (currentNode != lowAddress) {
+                            currentNode.setAddress(lowAddress);
+                        } else {
+                            currentNode.setAddress(lowNode);
+                        }
+                        head = currentNode;
+                    } else {
+                        if (currentNode != lowAddress) {
+                            currentNode.setAddress(lowAddress);
+                        } else {
+                            currentNode.setAddress(lowNode);
+                        }
+                        lowPriorNode.setAddress(currentNode);
+                    }
+
+                    tempNode = currentNode;
+                    currentNode = lowNode;
+                    lowNode = tempNode;
+                }
+
+            }
+            lowPriorNode = lowNode;
+            lowNode = lowNode.getAddress();
+        }
     }
 }
